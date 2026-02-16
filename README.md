@@ -2,7 +2,7 @@
 
 **Autoras: Paula Valentina Lozano, Ángela Gómez**
 
-## RETO 3 - El control remoto mágico - Patrón comportamental 
+## RETO 7 - El control remoto mágico - Patrón comportamental 
 
 **Diagrama de clases**
 
@@ -14,35 +14,65 @@ Nota: El diagrama fue apoyado del código UML brindado por ChatGPT.
 
 **Descripción**
 
-![alt text](images/command.png)
 
-![alt text](images/door.png)
+Para este ejercicio nos piden manejar acciones, historial de acciones y usuarios: los usuarios pueden interactuar con varios elementos como prender la luz, prender la música y editarle el volumen. Estas acciones deben ser registradas y se pueden deshacer por el usuario.
 
-![alt text](images/opendoorcommand.png)
+En este caso se aplicó el patrón Command, el cual nos ayuda a manejar las acciones e instanciarlas en objetos. Para esto utilizamos la interfaz Command, la cual es implementada por clases como TurnOnLightsCommand, OpenDoorCommand, PlayMusicCommand y AdjustVolumeCommand.
+
+Cada una de estas clases encapsula una acción específica y contiene la lógica necesaria para ejecutarla (execute()) y deshacerla (undo()), además de almacenar el usuario que realizó la acción y su descripción.
+
+La clase MagicRemote actúa como intermediaria, ya que se encarga de ejecutar los comandos y almacenarlos en una lista para llevar el historial completo de acciones realizadas.
+
+De esta manera logramos desacoplar la lógica de los dispositivos (Door, Lights, MusicPlayer) de la lógica de ejecución, permitiendo agregar nuevas acciones sin modificar las existentes.
+
+
+En este ejercicio se pueden ver claramente varios principios SOLID. El principio de responsabilidad única se cumple porque cada clase tiene una función específica: los dispositivos manejan su propia lógica, los comandos representan acciones concretas y MagicRemote solo las ejecuta y guarda en el historial.
+
+También se aplica el open/closed principal, ya que para agregar una nueva acción solo es necesario crear otra clase que implemente Command, sin modificar las existentes. Además, MagicRemote trabaja con la abstracción Command y no depende directamente de clases concretas.
+
+
+**Clase que hace el seguimiento a los comandos y los ejecuta**
+
+La clase MagicRemote es la encargada de recibir los comandos, ejecutarlos y almacenarlos en un historial. No conoce la implementación interna de cada acción, solo trabaja con la abstracción Command.
 
 ![alt text](images/magicremote.png)
 
-![alt text](images/mainremote.png)
-
-![alt text](images/examplemagicremote.png)
-
 **Manejo de casos usando switch en el Main**
 
-![alt text](images/main.png)
+![alt text](images/mainremote.png)
+
 
 **Interfaz puntual que establece métodos básicos**
 
-![alt text](/images/image.png)
+La interfaz Command define los métodos que todas las acciones deben implementar: ejecutar, deshacer y obtener información sobre la acción y el usuario.
 
-**Implementación de interfaz hacia cada categoría**
+Esto garantiza que todos los comandos puedan ser tratados de forma uniforme dentro de MagicRemote.
+![alt text](images/command.png)
 
+
+**Implementación de interfaz hacia cada categoría - Abrir puerta**
+
+OpenDoorCommand implementa la interfaz Command y encapsula la acción de abrir la puerta.
+
+Guarda el estado anterior antes de ejecutar la acción para poder restaurarlo cuando se llama al método undo().
+
+![alt text](images/opendoorcommand.png)
+
+**Clases concretas que se relacionan con sus acciones correspondientes - Puerta**
+
+![alt text](images/door.png)
+
+**Ejemplo ejercicio**
+
+![alt text](images/examplemagicremote.png)
 
 
 ## Pruebas de unidad
 
 Para complementar el ejercicio de código se decidió implementar pruebas de unidad con ayuda de ChatGPT para tratar casos bordes y hacerlos lo más robustos y pertinentes posibles. A continuación se muestran los resultados de estas pruebas, haciendo uso de la estructura del arquetipo de Maven, en donde usamos JUnit y logramos correr las pruebas en su carpeta correspondiente. 
 
-![alt text](images/tests.png)
+
+![alt text](images/testmagiccontrol.png)
 
 ---
 
