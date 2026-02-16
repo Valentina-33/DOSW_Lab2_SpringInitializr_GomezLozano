@@ -309,3 +309,7 @@ El diagrama cumple con lo solicitado en el reto:
 
 El enfoque fue mantener un diseño claro y extendible, evitando condicionales innecesarios y separando responsabilidades por clases.
 
+
+## Nota importante
+Pusimos los archivos generados con el Spring Initializr, pero está vacío puesto que no necesitamos código para este punto. Lo hicimos más que todo para practicar.
+
